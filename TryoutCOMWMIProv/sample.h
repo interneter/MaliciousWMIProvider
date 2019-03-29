@@ -1,6 +1,4 @@
 //*******************************************************************
-//  sample.h
-//  WMI Instance provider sample code
 //
 // Copyright (C) Microsoft. All Rights Reserved.
 //

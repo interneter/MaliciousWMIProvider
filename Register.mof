@@ -1,0 +1,30 @@
+#pragma autorecover
+
+Instance of __Win32Provider as $P   // $P is an alias
+{
+  Name        = "MalProv" ;   
+  ClsId   = "{22CB8761-914A-11cf-B705-00AA0062CBB7}" ;
+};
+
+instance of __InstanceProviderRegistration
+{
+  Provider = $P;
+  SupportsPut = FALSE;
+  SupportsGet = TRUE;
+  SupportsDelete = FALSE;
+  SupportsEnumeration = TRUE;
+};
+
+#pragma namespace ("\\\\.\\Root\\cimv2")
+
+[dynamic, provider("MalProv"),
+ClassContext("whatever!")]
+
+class MalClass
+{
+  [key]
+  String MalwareKey="WMIProv";   
+
+  [PropertyContext("Name")] 
+  uint32 Val;
+};

@@ -1,0 +1,8 @@
+#pragma namespace("\\\\.\\root\\subscription")
+instance of __EventFilter as $EventFilter
+{
+    EventNamespace = "Root\\Cimv2";
+    Name  = "filtP2";
+	Query = "Select * From __InstanceOperationEvent WITHIN 6 WHERE TargetInstance ISA 'MalClass'";
+    QueryLanguage = "WQL";
+};
