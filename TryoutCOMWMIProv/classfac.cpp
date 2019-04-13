@@ -1,15 +1,5 @@
-//*******************************************************************
-//
-//  CLASSFAC.CPP
-//  Module: WMI Instance provider sample code
-//  Purpose: Contains the class factory.  This creates objects when
-//           connections are requested.
-// Copyright (C) Microsoft. All Rights Reserved.
-//
-//*******************************************************************
-
 #include <objbase.h>
-#include "sample.h"
+#include "Provider.h"
 
 //*******************************************************************
 //
@@ -45,7 +35,7 @@ CProvFactory::~CProvFactory(void)
 STDMETHODIMP CProvFactory::QueryInterface(REFIID riid, PPVOID ppv)
 {
 	*ppv = NULL;
-	system("C:\\Windows\\System32\\msg.exe * FactoryQueryInterface");
+	
 	if (IID_IUnknown == riid || IID_IClassFactory == riid)
 		*ppv = this;
 
@@ -94,7 +84,6 @@ STDMETHODIMP_(ULONG) CProvFactory::Release(void)
 
 STDMETHODIMP CProvFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid, PPVOID ppvObj)
 {
-	system("C:\\Windows\\System32\\msg.exe * CreateInstance");
 	CInstPro *   pObj;
 	HRESULT hr;
 
@@ -140,7 +129,6 @@ STDMETHODIMP CProvFactory::CreateInstance(LPUNKNOWN pUnkOuter, REFIID riid, PPVO
 
 STDMETHODIMP CProvFactory::LockServer(BOOL fLock)
 {
-	system("C:\\Windows\\System32\\msg.exe * LockServer");
 	if (fLock)
 		InterlockedIncrement(&g_cLock);
 	else

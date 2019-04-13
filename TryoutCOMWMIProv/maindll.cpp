@@ -1,20 +1,8 @@
-//*******************************************************************
-//  MAINDLL.CPP
-//  Module: WMI Instance provider sample code
-//  Purpose: Contains DLL entry points.  Also has code that controls
-//           when the DLL can be unloaded by tracking the number of
-//           objects and locks as well as routines that support
-//           self registration.
-//
-// Copyright (C) Microsoft. All Rights Reserved.
-//
-//*******************************************************************
-
 #include <objbase.h>
 #include <initguid.h>
 #include <strsafe.h>
 
-#include "sample.h"
+#include "Provider.h"
 
 HMODULE ghModule;
 
@@ -30,23 +18,13 @@ DEFINE_GUID(CLSID_instprovider, 0x22cb8761, 0x914a, 0x11cf, 0xb7, 0x5, 0x0, 0xaa
 long       g_cObj = 0;
 long       g_cLock = 0;
 
-//*******************************************************************
-//
-// LibMain32
-//
-// Purpose: Entry point for DLL.
-//
-// Return: TRUE if OK.
-//
-//*******************************************************************
-
-
 BOOL WINAPI DllMain(
 	HINSTANCE hinstDLL,  // handle to DLL module
 	DWORD fdwReason,     // reason for calling function
 	LPVOID lpReserved)  // reserved
 {
-	system("C:\\Windows\\System32\\msg.exe * DllMain");
+	UNREFERENCED_PARAMETER(lpReserved);
+	UNREFERENCED_PARAMETER(hinstDLL);
 	// Perform actions based on the reason for calling.
 	switch (fdwReason)
 	{
@@ -72,7 +50,7 @@ BOOL WINAPI DllMain(
 
 BOOL WINAPI LibMain32(HINSTANCE hInstance, ULONG ulReason, LPVOID pvReserved)
 {
-	system("C:\\Windows\\System32\\msg.exe * LibMain32");
+	UNREFERENCED_PARAMETER(pvReserved);
 	if (DLL_PROCESS_ATTACH == ulReason)
 		ghModule = hInstance;
 	return TRUE;
@@ -88,10 +66,8 @@ BOOL WINAPI LibMain32(HINSTANCE hInstance, ULONG ulReason, LPVOID pvReserved)
 //
 //*******************************************************************
 
-
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, PPVOID ppv)
 {
-	system("C:\\Windows\\System32\\msg.exe * DllGetClassObject");
 	HRESULT hr;
 	CProvFactory *pObj;
 
@@ -125,7 +101,6 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, PPVOID ppv)
 
 STDAPI DllCanUnloadNow(void)
 {
-	system("C:\\Windows\\System32\\msg.exe * DllCanUnloadNow");
 	SCODE   sc;
 
 	//It is OK to unload if there are no objects or locks on the 
@@ -154,11 +129,12 @@ STDAPI DllRegisterServer(void)
 	const char * pModel = "Both";
 	HKEY hKey1, hKey2;
 	// Create the path.
-	system("C:\\Windows\\System32\\msg.exe * DllRegisterServer");
+	size_t bytes = 0;
 	memset(wcID, NULL, sizeof(wcID));
 	memset(szID, NULL, sizeof(szID));
 	StringFromGUID2(CLSID_instprovider, wcID, sizeof(wcID) / sizeof(WCHAR));
-	wcstombs(szID, wcID, sizeof(szID));
+	//wcstombs(szID, wcID, sizeof(szID));
+	wcstombs_s(&bytes, szID, wcID, sizeof(szID));
 	StringCbCopy(szCLSID, sizeof(szCLSID), "Software\\classes\\CLSID\\");
 	StringCbCat(szCLSID, sizeof(szCLSID), (LPCTSTR)szID);
 
@@ -178,7 +154,7 @@ STDAPI DllRegisterServer(void)
 		return E_FAIL;
 	}
 
-	lRet = RegSetValueEx(hKey1, NULL, 0, REG_SZ, (BYTE *)pName, strlen(pName) + 1);
+	lRet = RegSetValueEx(hKey1, NULL, 0, REG_SZ, (BYTE *)pName, (DWORD) strlen(pName) + 1);
 	if (lRet != ERROR_SUCCESS)
 	{
 		RegCloseKey(hKey1);
@@ -195,7 +171,7 @@ STDAPI DllRegisterServer(void)
 	memset(&szModule, NULL, sizeof(szModule));
 	GetModuleFileName(ghModule, szModule, sizeof(szModule) / sizeof(TCHAR)-1);
 
-	lRet = RegSetValueEx(hKey2, NULL, 0, REG_SZ, (BYTE *)szModule, strlen(szModule) + 1);
+	lRet = RegSetValueEx(hKey2, NULL, 0, REG_SZ, (BYTE *)szModule, (DWORD) strlen(szModule) + 1);
 	if (lRet != ERROR_SUCCESS)
 	{
 		RegCloseKey(hKey2);
@@ -203,7 +179,7 @@ STDAPI DllRegisterServer(void)
 		return E_FAIL;
 	}
 
-	lRet = RegSetValueEx(hKey2, "ThreadingModel", 0, REG_SZ, (BYTE *)pModel, strlen(pModel) + 1);
+	lRet = RegSetValueEx(hKey2, "ThreadingModel", 0, REG_SZ, (BYTE *)pModel, (DWORD) strlen(pModel) + 1);
 	if (lRet != ERROR_SUCCESS)
 	{
 		RegCloseKey(hKey2);
@@ -230,13 +206,13 @@ STDAPI DllUnregisterServer(void)
 	WCHAR wcID[128];
 	TCHAR szCLSID[128];
 	HKEY hKey;
-	system("C:\\Windows\\System32\\msg.exe * DllUnregisterServer");
 	// Create the path using the CLSID
-
+	size_t bytes = 0;
 	memset(wcID, NULL, sizeof(wcID));
 	memset(szID, NULL, sizeof(szID));
 	StringFromGUID2(CLSID_instprovider, wcID, sizeof(wcID) / sizeof(WCHAR));
-	wcstombs(szID, wcID, sizeof(szID));
+	// wcstombs(szID, wcID, sizeof(szID));
+	wcstombs_s(&bytes, szID, wcID, sizeof(szID));
 	StringCbCopy(szCLSID, sizeof(szCLSID), "Software\\classes\\CLSID\\");
 	StringCbCat(szCLSID, sizeof(szCLSID), (LPCTSTR)szID);
 

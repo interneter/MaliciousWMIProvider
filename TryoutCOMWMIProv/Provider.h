@@ -54,13 +54,18 @@ public:
 		/* [unique][in][out] */ IWbemServices __RPC_FAR *__RPC_FAR *ppWorkingNamespace,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppResult)
 	{
-		system("C:\\Windows\\System32\\msg.exe * Init");
+		UNREFERENCED_PARAMETER(ppResult);
+		UNREFERENCED_PARAMETER(ppWorkingNamespace);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Namespace);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
 	HRESULT STDMETHODCALLTYPE CancelAsyncCall(
 		/* [in] */ IWbemObjectSink __RPC_FAR *pSink)
 	{
+		UNREFERENCED_PARAMETER(pSink);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -68,7 +73,8 @@ public:
 		/* [in] */ long lFlags,
 		/* [out] */ IWbemObjectSink __RPC_FAR *__RPC_FAR *ppResponseHandler)
 	{
-		system("C:\\Windows\\System32\\msg.exe * QueryObjectSink");
+		UNREFERENCED_PARAMETER(ppResponseHandler);
+		UNREFERENCED_PARAMETER(lFlags);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -79,7 +85,11 @@ public:
 		/* [unique][in][out] */ IWbemClassObject __RPC_FAR *__RPC_FAR *ppObject,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppCallResult)
 	{
-		system("C:\\Windows\\System32\\msg.exe * GetObject");
+		UNREFERENCED_PARAMETER(ppCallResult);
+		UNREFERENCED_PARAMETER(ppObject);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(ObjectPath);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -94,7 +104,8 @@ public:
 		long            lFlags
 		)
 	{
-		system("C:\\Windows\\System32\\msg.exe * ProvideEvents");
+		UNREFERENCED_PARAMETER(pSink);
+		UNREFERENCED_PARAMETER(lFlags);
 		return WBEM_E_NOT_SUPPORTED;
 	}
 
@@ -104,6 +115,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppCallResult)
 	{
+		UNREFERENCED_PARAMETER(ppCallResult);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(pObject);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -113,6 +128,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(pObject);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -122,6 +141,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppCallResult)
 	{
+		UNREFERENCED_PARAMETER(ppCallResult);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Class);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -131,6 +154,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Class);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -141,6 +168,10 @@ public:
 		/* [out] */
 		IEnumWbemClassObject __RPC_FAR *__RPC_FAR *ppEnum)
 	{
+		UNREFERENCED_PARAMETER(ppEnum);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Superclass);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -150,6 +181,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Superclass);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -159,6 +194,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppCallResult)
 	{
+		UNREFERENCED_PARAMETER(ppCallResult);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(pInst);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -168,6 +207,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(pInst);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -177,6 +220,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [unique][in][out] */ IWbemCallResult __RPC_FAR *__RPC_FAR *ppCallResult)
 	{
+		UNREFERENCED_PARAMETER(ppCallResult);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(ObjectPath);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -186,6 +233,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(ObjectPath);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -195,6 +246,10 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [out] */ IEnumWbemClassObject __RPC_FAR *__RPC_FAR *ppEnum)
 	{
+		UNREFERENCED_PARAMETER(ppEnum);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Class);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -211,7 +266,11 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [out] */ IEnumWbemClassObject __RPC_FAR *__RPC_FAR *ppEnum)
 	{
-		system("C:\\Windows\\System32\\msg.exe * ExecQuery");
+		UNREFERENCED_PARAMETER(ppEnum);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Query);
+		UNREFERENCED_PARAMETER(QueryLanguage);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -222,6 +281,11 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Query);
+		UNREFERENCED_PARAMETER(QueryLanguage);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -232,7 +296,11 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [out] */ IEnumWbemClassObject __RPC_FAR *__RPC_FAR *ppEnum)
 	{
-		system("C:\\Windows\\System32\\msg.exe * ExenNotQuery");
+		UNREFERENCED_PARAMETER(ppEnum);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Query);
+		UNREFERENCED_PARAMETER(QueryLanguage);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 
@@ -243,7 +311,11 @@ public:
 		/* [in] */ IWbemContext __RPC_FAR *pCtx,
 		/* [in] */ IWbemObjectSink __RPC_FAR *pResponseHandler)
 	{
-		system("C:\\Windows\\System32\\msg.exe * ExenNotQueryAsync");
+		UNREFERENCED_PARAMETER(pResponseHandler);
+		UNREFERENCED_PARAMETER(pCtx);
+		UNREFERENCED_PARAMETER(lFlags);
+		UNREFERENCED_PARAMETER(Query);
+		UNREFERENCED_PARAMETER(QueryLanguage);
 		return WBEM_E_NOT_SUPPORTED;
 	};
 

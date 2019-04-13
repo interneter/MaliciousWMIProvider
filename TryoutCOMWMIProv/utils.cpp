@@ -1,13 +1,5 @@
-//*******************************************************************
-//  UTILS.CPP
-//  Module: WMI Instance provider sample code
-//  Purpose: General purpose utilities.  
-// (c) Microsoft. All rights reserved.
-//
-//*******************************************************************
-
 #include <objbase.h>
-#include "sample.h"
+#include "Provider.h"
 
 //*******************************************************************
 //

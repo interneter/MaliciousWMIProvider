@@ -1,4 +1,5 @@
 #pragma autorecover
+#pragma namespace ("\\\\.\\Root\\cimv2")
 
 Instance of __Win32Provider as $P   // $P is an alias
 {
@@ -15,11 +16,8 @@ instance of __InstanceProviderRegistration
   SupportsEnumeration = TRUE;
 };
 
-#pragma namespace ("\\\\.\\Root\\cimv2")
-
 [dynamic, provider("MalProv"),
 ClassContext("whatever!")]
-
 class MalClass
 {
   [key]
