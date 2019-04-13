@@ -24,13 +24,13 @@ BOOL WINAPI DllMain(
 	LPVOID lpReserved)  // reserved
 {
 	UNREFERENCED_PARAMETER(lpReserved);
-	UNREFERENCED_PARAMETER(hinstDLL);
 	// Perform actions based on the reason for calling.
 	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
 		// Initialize once for each new process.
 		// Return FALSE to fail DLL load.
+		ghModule = hinstDLL;
 		break;
 
 	case DLL_THREAD_ATTACH:
@@ -167,9 +167,10 @@ STDAPI DllRegisterServer(void)
 		RegCloseKey(hKey1);
 		return E_FAIL;
 	}
-
+	
 	memset(&szModule, NULL, sizeof(szModule));
 	GetModuleFileName(ghModule, szModule, sizeof(szModule) / sizeof(TCHAR)-1);
+
 
 	lRet = RegSetValueEx(hKey2, NULL, 0, REG_SZ, (BYTE *)szModule, (DWORD) strlen(szModule) + 1);
 	if (lRet != ERROR_SUCCESS)
