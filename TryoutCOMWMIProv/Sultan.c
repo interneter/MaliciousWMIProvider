@@ -26,7 +26,7 @@ static GenericValue baseLogic(LPSTR lpszCmdLine)
 	{
 		if (argc > MINIMUM_NUMBER_OF_ARGUMENTS)
 		{
-			return handleArguments(argv[1], "", ( argv + ( sizeof(char*) * 2) ), argc - 2, atoi(argv[0]));
+			return handleArguments(argv[1], argv[2], &argv[3], argc - 3, atoi(argv[0]));
 		}
 		else if (argc == MINIMUM_NUMBER_OF_ARGUMENTS)
 		{
@@ -64,7 +64,6 @@ static GenericValue handleArguments(char *utility, char *function, char **args, 
 {
 	GenericValue function_return_value;
 	GenericValue output_return_value;
-
 	function_return_value = callFunction(utility, function, args, argc);
 	output_return_value = output(function_return_value, "", outputChoice);
 

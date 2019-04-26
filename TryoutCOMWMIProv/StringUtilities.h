@@ -1,7 +1,5 @@
 #pragma once
-
 /**********Includes**********/
-
 #include <windows.h>
 #include <tchar.h>
 #include <math.h>
@@ -23,6 +21,6 @@ char *strSubstring(char *str, int from, int to);
 int strIndexOf(char *str, char chSerach, int from);
 char *strConcat(char *base, char *str);
 char *strJoin(char **strArr, int len, char *delim);
-char *genericValueToString(GenericValue a);
+char *genericValueToString(GenericValue *a);
 GenericValue stringToGenericValue(char *str);
 BYTE *stringToByteArray(char *str);

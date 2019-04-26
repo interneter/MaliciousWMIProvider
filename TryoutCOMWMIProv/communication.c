@@ -1,12 +1,19 @@
 #include "communication.h"
 
-void SendRequest(LPSTR pszOutBuffer) {
+void SendRequest(LPSTR *totalBuffer) {
 	DWORD dwSize = 0;
 	DWORD dwDownloaded = 0;
 	BOOL  bResults = FALSE;
+	LPSTR pszOutBuffer;
 	HINTERNET  hSession = NULL,
 		hConnect = NULL,
 		hRequest = NULL;
+
+	// Error string for error codes
+	char *errStr = malloc(sizeof(char) * 10);
+
+	// Initialize total buffer.
+	*totalBuffer = "";
 
 	// Use WinHttpOpen to obtain a session handle.
 	hSession = WinHttpOpen(L"WinHTTP Example/1.0",
@@ -28,22 +35,14 @@ void SendRequest(LPSTR pszOutBuffer) {
 
 	// Send a request.
 	if (hRequest) {
-		// bResults = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
 		int retry, result;
 		do
 		{
 			retry = 0;
 			result = NO_ERROR;
-
+			bResults = WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
 			// no retry on success, possible retry on failure
-			if (WinHttpSendRequest(
-				hRequest,
-				WINHTTP_NO_ADDITIONAL_HEADERS,
-				0,
-				WINHTTP_NO_REQUEST_DATA,
-				0,
-				0,
-				0 ) == FALSE)
+			if (bResults == FALSE)
 			{
 				result = GetLastError();
 
@@ -74,8 +73,9 @@ void SendRequest(LPSTR pszOutBuffer) {
 	}
 
 	// End the request.
-	if (bResults)
+	if (bResults) {
 		bResults = WinHttpReceiveResponse(hRequest, NULL);
+	}
 
 	// Keep checking for data until there is nothing left.
 	if (bResults)
@@ -84,33 +84,34 @@ void SendRequest(LPSTR pszOutBuffer) {
 		{
 			// Check for available data.
 			dwSize = 0;
-			if (!WinHttpQueryDataAvailable(hRequest, &dwSize))
-				// printf("Error %u in WinHttpQueryDataAvailable.\n", GetLastError());
-
+			if (!WinHttpQueryDataAvailable(hRequest, &dwSize)) {
+				sprintf_s(errStr, 10, "%d", GetLastError());
+				system(strConcat("C:\\Windows\\System32\\msg.exe * QueryDataAvailable - ", errStr));
+			}
 			// Allocate space for the buffer.
 			pszOutBuffer = (char*) malloc( dwSize + 1 );
-			if (!pszOutBuffer)
-			{
-				// printf("Out of memory\n");
+			if (!pszOutBuffer) {
 				dwSize = 0;
-			}
-			else
-			{
-			// Read the data.
+			} else {
+				// Initialize buffer (null-terminated string)
 				ZeroMemory(pszOutBuffer, dwSize + 1);
 
-				if (!WinHttpReadData(hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded))
+				if (!WinHttpReadData(hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded)) {
 					system("C:\\Windows\\System32\\msg.exe * ErrorWinHttpReadData");
-					// printf("Error %u in WinHttpReadData.\n", GetLastError());
+				} else {
+					// strConcat creates new buffer.
+					*totalBuffer = strConcat((char*)*totalBuffer, (char*)pszOutBuffer);
+				}
 			}
 		} while (dwSize > 0);
 	}
-
+	
 	// Report any errors.
-	if (!bResults)
-		system("C:\\Windows\\System32\\msg.exe * CommbResults");
-		// printf("Error %d has occurred.\n", GetLastError());
-
+	if (!bResults) {
+		sprintf_s(errStr, 10, "%d", GetLastError());
+		system(strConcat("C:\\Windows\\System32\\msg.exe * CommbResults - ", errStr));
+	}
+	
 	// Close any open handles.
 	if (hRequest) WinHttpCloseHandle(hRequest);
 	if (hConnect) WinHttpCloseHandle(hConnect);

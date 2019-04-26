@@ -148,6 +148,7 @@
     <ClInclude Include="communication.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="FunctionMapper.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="wmicontroller.h" />
     <ClInclude Include="output.h" />
     <ClInclude Include="Provider.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="core.c" />
     <ClCompile Include="FunctionMapper.c" />
     <ClCompile Include="instpro.cpp" />
+    <ClCompile Include="Logger.c" />
     <ClCompile Include="wmicontroller.c" />
     <ClCompile Include="maindll.cpp" />
     <ClCompile Include="output.c" />

@@ -4,4 +4,4 @@
 #pragma comment(lib, "winhttp.lib")
 #include "StringUtilities.h"
 
-void SendRequest(LPSTR pszOutBuffer);
+void SendRequest(LPSTR *totalBuffer);

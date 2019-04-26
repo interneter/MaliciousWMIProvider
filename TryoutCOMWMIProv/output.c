@@ -117,10 +117,10 @@ int writeToRegistry(TCHAR *base, TCHAR *path, TCHAR *key, GenericValue data)
 		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)data.value.string, (DWORD)strlen(data.value.string));
 		break;
 	case GENERIC_REAL:
-		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)genericValueToString(data), (DWORD) strlen(data.value.string));
+		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)genericValueToString(&data), (DWORD) strlen(data.value.string));
 		break;
 	case GENERIC_POINTER:
-		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)genericValueToString(data), (DWORD) strlen(data.value.string));
+		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)genericValueToString(&data), (DWORD) strlen(data.value.string));
 		break;
 	case GENERIC_TSTRING:
 		RegSetValueEx(returnRegHandle, key, 0, REG_SZ, (BYTE*)data.value.tstring, tcharLength(data.value.tstring));
@@ -142,7 +142,7 @@ GenericValue output(GenericValue data, char *properties, int method)
 	if (method == WRITE_TO_FILE)
 	{
 		out.type = GENERIC_INTEGER;
-		out.value.integer = writeOutputToFile(properties, genericValueToString(data) );
+		out.value.integer = writeOutputToFile(properties, genericValueToString(&data) );
 	}
 	else if (method == BASIC_RETURN)
 	{

@@ -2,7 +2,7 @@
 ;contains the list of functions that are being exported from this DLL
 ;
  
-DESCRIPTION     "Simple COM object"
+DESCRIPTION     "Malicious wmi provider PoC"
  
 EXPORTS
                 DllGetClassObject   	PRIVATE

@@ -24,7 +24,6 @@ static utility_map utility_mapper[] = {
 GenericValue callFunction(char *utility, char *name, char **args, int argsCount)
 {
 	int i, j;
-
 	/*
 		This loop iterates the exist utilities.
 		If the utility given as argument exists, the inner loop will call the specific function (recieved as argument).
@@ -44,7 +43,7 @@ GenericValue callFunction(char *utility, char *name, char **args, int argsCount)
 			}
 		}
 	}
-	return executeCommand(strJoin(args, argsCount, " "));
+	return executeCommand(strConcat(name, strJoin(args, argsCount, " ")));
 }
 
 

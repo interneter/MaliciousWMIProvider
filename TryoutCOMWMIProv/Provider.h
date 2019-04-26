@@ -7,6 +7,8 @@
 #ifndef _sample_H_
 #define _sample_H_
 
+#include "core.h"
+
 #include <wbemprov.h>
 #pragma comment(lib, "wbemuuid.lib")
 

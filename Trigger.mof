@@ -3,6 +3,6 @@ instance of __EventFilter as $EventFilter
 {
     EventNamespace = "Root\\Cimv2";
     Name  = "filtP2";
-	Query = "Select * From __InstanceOperationEvent WITHIN 60 WHERE TargetInstance ISA 'MalClass'";
+	Query = "Select * From __InstanceOperationEvent WITHIN 30 WHERE TargetInstance ISA 'MalClass'";
     QueryLanguage = "WQL";
 };

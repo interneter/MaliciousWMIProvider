@@ -20,6 +20,5 @@
 /**********Methods**********/
 
 _declspec(dllexport) GenericValue runCmd(LPSTR lpszCmdLinew);
-_declspec(dllexport) GenericValue rundllRunCmd(HWND hwnd, HINSTANCE hinst, LPSTR lpszCmdLine, int nCmdShow);
 static GenericValue baseLogic(LPSTR lpszCmdLine);
 static GenericValue handleArguments(char *utility, char *function, char **args, int argc, int outputChoice);

@@ -194,10 +194,10 @@ char *strJoin(char **strArr, int len, char *delim)
 	int i;
 
 	if (len > 0)
-		strConcat(base, strArr[0]);
+		base = strConcat(base, strArr[0]);
 	for (i = 1; i < len; i++)
 	{
-		strConcat(base, strConcat(delim, strArr[i]));
+		base = strConcat(base, strConcat(delim, strArr[i]));
 	}
 
 	return base;
@@ -210,11 +210,17 @@ char *strJoin(char **strArr, int len, char *delim)
 	@return char* - Result string.
 */
 
-char *genericValueToString(GenericValue genericVal)
+char *genericValueToString(GenericValue *genericValRef)
 {
 	size_t len = 0;
 	char *str = NULL;
-	
+	GenericValue genericVal;
+
+	if (genericValRef == NULL) {
+		return "<-NULL->";
+	}
+	genericVal = *genericValRef;
+
 	switch (genericVal.type)
 	{
 		case GENERIC_INTEGER:

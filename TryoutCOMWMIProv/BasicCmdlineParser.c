@@ -56,7 +56,7 @@ int parseCmdline(char *cmdline, char ***argv, int *argc)
 		The original array size should be substracted by half of the quotes number to get the new array size (argv).
 	*/
 	*argc = splittedArrSize - (countQuotes / 2);
-	(*argv) = (char**)malloc(sizeof(char*)* (*argc));
+	(*argv) = (char**)malloc(sizeof(char*)* (*argc+1));
 	for (i = 0; i < splittedArrSize; i++) // Loops through each cell.
 	{
 		segment = splittedString[i];
