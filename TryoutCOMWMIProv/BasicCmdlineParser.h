@@ -8,6 +8,6 @@
 
 #define CMD_LINE_DELIMITER ' '		// Seperator between words.
 
-/**********Methods**********/
+/**********Declarations**********/
 
 int parseCmdline(char *cmdline, char ***argv, int *argc);

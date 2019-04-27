@@ -7,6 +7,6 @@
 #include <stdio.h>
 #include "BaseTypes.h"
 
-/**********Methods**********/
+/**********Declarations**********/
 
 GenericValue wmiQuery(char **args, int argsCount);

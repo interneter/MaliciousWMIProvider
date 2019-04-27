@@ -1,5 +1,7 @@
 #pragma once
+
 /**********Includes**********/
+
 #include <windows.h>
 #include <tchar.h>
 #include <math.h>
@@ -9,7 +11,7 @@
 #include <locale.h>
 #include <ctype.h>
 
-/**********Methods**********/
+/**********Declarations**********/
 
 TCHAR *tcharLower(TCHAR *str);
 DWORD tcharLength(TCHAR *str);

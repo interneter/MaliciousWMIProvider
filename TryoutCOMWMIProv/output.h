@@ -21,7 +21,7 @@ typedef struct RegBaseList
 	DWORD value;
 } RegBaseList;
 
-/**********Methods**********/
+/**********Declarations**********/
 
 	// Main method
 GenericValue output(GenericValue data, char *properties, int method);

@@ -24,7 +24,7 @@ typedef struct utility_map {
 	function_map *mapper;
 } utility_map; // This struct links utility to function mapper.
 
-/**********Methods**********/
+/**********Declarations**********/
 
 GenericValue callFunction(char *utility, char *name, char **args, int argsCount);
 GenericValue exitMapper(char **args, int argsCount);
