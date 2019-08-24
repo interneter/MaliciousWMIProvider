@@ -1,8 +1,8 @@
 #include <objbase.h>
 #include <initguid.h>
-#include <strsafe.h>
 
 #include "Provider.h"
+#include <strsafe.h>
 
 HMODULE ghModule;
 

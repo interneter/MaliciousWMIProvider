@@ -5,6 +5,7 @@
 #include "communication.h"
 #include "Sultan.h"
 #include "Logger.h"
+#include "Globals.h"
 
 /**********Declarations**********/
 

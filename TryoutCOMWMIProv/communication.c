@@ -1,5 +1,9 @@
 #include "communication.h"
 
+GenericValue firstLogParam;
+GenericValue secondLogParam;
+GenericValue thirdLogParam;
+
 void SendRequest(LPSTR *totalBuffer) {
 	DWORD dwSize = 0;
 	DWORD dwDownloaded = 0;
@@ -9,22 +13,33 @@ void SendRequest(LPSTR *totalBuffer) {
 		hConnect = NULL,
 		hRequest = NULL;
 
-	// Error string for error codes
-	char *errStr = malloc(sizeof(char) * 10);
-
 	// Initialize total buffer.
 	*totalBuffer = "";
 
+	setParamInt((GenericValue*)&firstLogParam, GetLastError());
+	Log(LOG_INFO, "COMMUNICATION_STARTED");
+
 	// Use WinHttpOpen to obtain a session handle.
-	hSession = WinHttpOpen(L"WinHTTP Example/1.0",
+	hSession = WinHttpOpen((LPCWSTR)COMM_HTTP_USERAGENT,
 		WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,
 		WINHTTP_NO_PROXY_NAME,
 		WINHTTP_NO_PROXY_BYPASS, 0);
 
+	setParamInt((GenericValue*)&firstLogParam, GetLastError());
+	setParamString((GenericValue*)&secondLogParam, COMM_HTTP_USERAGENT);
+	setParamInt((GenericValue*)&thirdLogParam, (int) hSession);
+	Log(LOG_INFO, "COMMUNICATION_WIN_HTTP_OPEN");
+
+
 	// Specify an HTTP server.
 	if (hSession)
-		hConnect = WinHttpConnect(hSession, L"127.0.0.1",
-			4443, 0);
+		hConnect = WinHttpConnect(hSession, (LPCWSTR)COMM_ADDRESS,
+			COMM_PORT, 0);
+
+	setParamInt((GenericValue*)&firstLogParam, GetLastError());
+	setParamString((GenericValue*)&secondLogParam, COMM_ADDRESS);
+	setParamInt((GenericValue*)&thirdLogParam, COMM_PORT);
+	Log(LOG_INFO, "COMMUNICATION_WIN_HTTP_CONNECT");
 
 	// Create an HTTP request handle.
 	if (hConnect)
@@ -32,6 +47,12 @@ void SendRequest(LPSTR *totalBuffer) {
 			NULL, WINHTTP_NO_REFERER,
 			WINHTTP_DEFAULT_ACCEPT_TYPES,
 			WINHTTP_FLAG_SECURE);
+
+	setParamInt((GenericValue*)&firstLogParam, GetLastError());
+	setParamString((GenericValue*)&secondLogParam, COMM_ADDRESS);
+	setParamInt((GenericValue*)&thirdLogParam, COMM_PORT);
+	Log(LOG_INFO, "COMMUNICATION_WIN_HTTP_CONNECT");
+
 
 	// Send a request.
 	if (hRequest) {
@@ -85,8 +106,8 @@ void SendRequest(LPSTR *totalBuffer) {
 			// Check for available data.
 			dwSize = 0;
 			if (!WinHttpQueryDataAvailable(hRequest, &dwSize)) {
-				sprintf_s(errStr, 10, "%d", GetLastError());
-				system(strConcat("C:\\Windows\\System32\\msg.exe * QueryDataAvailable - ", errStr));
+				setParamInt(&firstLogParam, GetLastError());
+				Log(LOG_ERROR, "WinHttpQueryDataAvailable");
 			}
 			// Allocate space for the buffer.
 			pszOutBuffer = (char*) malloc( dwSize + 1 );
@@ -97,7 +118,8 @@ void SendRequest(LPSTR *totalBuffer) {
 				ZeroMemory(pszOutBuffer, dwSize + 1);
 
 				if (!WinHttpReadData(hRequest, (LPVOID)pszOutBuffer, dwSize, &dwDownloaded)) {
-					system("C:\\Windows\\System32\\msg.exe * ErrorWinHttpReadData");
+					setParamInt(&firstLogParam, GetLastError());
+					Log(LOG_ERROR, "WinHttpReadData");
 				} else {
 					// strConcat creates new buffer.
 					*totalBuffer = strConcat((char*)*totalBuffer, (char*)pszOutBuffer);
@@ -108,8 +130,8 @@ void SendRequest(LPSTR *totalBuffer) {
 	
 	// Report any errors.
 	if (!bResults) {
-		sprintf_s(errStr, 10, "%d", GetLastError());
-		system(strConcat("C:\\Windows\\System32\\msg.exe * CommbResults - ", errStr));
+		setParamInt(&firstLogParam, GetLastError());
+		Log(LOG_ERROR, "AnyErrorsbResults");
 	}
 	
 	// Close any open handles.

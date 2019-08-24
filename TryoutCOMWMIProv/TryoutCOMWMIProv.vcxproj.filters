@@ -99,6 +99,9 @@
     <ClCompile Include="Logger.c">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Configuration.c">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Provider.h">
@@ -135,6 +138,12 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,19 @@
 #pragma once
 #include "Logger.h"
 
+GenericValue firstLogParam;
+GenericValue secondLogParam;
+GenericValue thirdLogParam;
+
+void initLog() {
+	initLogParams();
+}
+
+void initLogParams() {
+	stringToGenericValueRef("", &firstLogParam);
+	stringToGenericValueRef("", &secondLogParam);
+	stringToGenericValueRef("", &thirdLogParam);
+}
 /*
 	This function returns formatted string of the current UTC time based on GetSystemTime() WINAPI function.
 
@@ -10,6 +23,15 @@ void getCurrentTime(char **timestamp) {
 	SYSTEMTIME curTime;
 	GetSystemTime(&curTime);
 	sprintf_s(*timestamp, LOG_TIME_SIZE, "%d/%d/%d %d:%d:%d", curTime.wDay, curTime.wMonth, curTime.wYear, curTime.wHour, curTime.wMinute, curTime.wSecond);
+}
+
+void setParamInt(GenericValue* param, int a) {
+	param->type = GENERIC_INTEGER;
+	param->value.integer = a;
+}
+
+void setParamString(GenericValue* param, char *a) {
+	stringToGenericValueRef(a, param);
 }
 
 /*
@@ -22,7 +44,7 @@ void getCurrentTime(char **timestamp) {
 	@param val2 - Pointer to GenericValue struct used as parameter for the logline.
 	@param val3 - Pointer to GenericValue struct used as parameter for the logline.
 */
-void initLogString(char **logLine, int level, char *message, GenericValue *val1, GenericValue *val2, GenericValue *val3) {
+void initLogString(char **logLine, int level, char *message) {
 	char ** logMessageArr = malloc(sizeof(char*) * LOG_ARG_SIZE);
 	char *timestamp = (char*)malloc(sizeof(char) * LOG_TIME_SIZE);
 
@@ -36,9 +58,9 @@ void initLogString(char **logLine, int level, char *message, GenericValue *val1,
 	logMessageArr[0] = timestamp;
 	logMessageArr[1] = levelStr;
 	logMessageArr[2] = message;
-	logMessageArr[3] = genericValueToString(val1);
-	logMessageArr[4] = genericValueToString(val2);
-	logMessageArr[5] = genericValueToString(val3);
+	logMessageArr[3] = genericValueToString(&firstLogParam);
+	logMessageArr[4] = genericValueToString(&secondLogParam);
+	logMessageArr[5] = genericValueToString(&thirdLogParam);
 
 	// Convert log array to string.
 	*logLine = strJoin(logMessageArr, (int) LOG_ARG_SIZE, (char*) LOG_DELIMITER);
@@ -53,7 +75,7 @@ void initLogString(char **logLine, int level, char *message, GenericValue *val1,
 	@param val2 - Pointer to GenericValue struct used as parameter for the logline.
 	@param val3 - Pointer to GenericValue struct used as parameter for the logline.
 */
-void Log(int level, char *message, GenericValue *val1, GenericValue *val2, GenericValue *val3)
+void Log(int level, char *message)
 {
 	// logLine will be initialized with new pointer from initLogString
 	char *logLine = NULL;
@@ -70,10 +92,12 @@ void Log(int level, char *message, GenericValue *val1, GenericValue *val2, Gener
 	}
 
 	// Generate logline.
-	initLogString(&logLine, level, message, val1, val2, val3);
+	initLogString(&logLine, level, message);
 	fprintf(logFileHandle, "%s\r\n", logLine);
 	
 	// Cleanup
+
+	initLogParams();
 	fclose(logFileHandle);
 	free(logLine);
 }

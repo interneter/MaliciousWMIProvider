@@ -224,7 +224,8 @@ char *genericValueToString(GenericValue *genericValRef)
 	switch (genericVal.type)
 	{
 		case GENERIC_INTEGER:
-			sprintf_s(str, 50, "%d", genericVal.value.integer);
+			str = malloc(sizeof(char) * 11);
+			sprintf_s(str, 11, "%d", genericVal.value.integer);
 			break;
 		case GENERIC_STRING:
 			len = strlen(genericVal.value.string);
@@ -272,6 +273,12 @@ GenericValue stringToGenericValue(char *str)
 	out.value.string = str;
 
 	return out;
+}
+
+void stringToGenericValueRef(char *str, GenericValue *genVal)
+{
+	genVal->type = GENERIC_STRING;
+	genVal->value.string = str;
 }
 
 BYTE *stringToByteArray(char *str)

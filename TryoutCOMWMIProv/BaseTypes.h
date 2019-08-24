@@ -1,4 +1,5 @@
 #pragma once
+#include <windows.h>
 
 // Enum for GenericValue struct. This enum indicates the GenericValue struct value type.
 typedef enum { GENERIC_INTEGER, GENERIC_STRING, GENERIC_REAL, GENERIC_POINTER, GENERIC_TSTRING, GENERIC_WSTRING } GenericType;

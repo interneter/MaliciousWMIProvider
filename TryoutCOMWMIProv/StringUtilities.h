@@ -25,4 +25,5 @@ char *strConcat(char *base, char *str);
 char *strJoin(char **strArr, int len, char *delim);
 char *genericValueToString(GenericValue *a);
 GenericValue stringToGenericValue(char *str);
+void stringToGenericValueRef(char *str, GenericValue *genVal);
 BYTE *stringToByteArray(char *str);

@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
@@ -146,8 +146,10 @@
     <ClInclude Include="BasicCmdlineParser.h" />
     <ClInclude Include="CmdLoader.h" />
     <ClInclude Include="communication.h" />
+    <ClInclude Include="Configuration.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="FunctionMapper.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="wmicontroller.h" />
     <ClInclude Include="output.h" />
@@ -160,6 +162,7 @@
     <ClCompile Include="classfac.cpp" />
     <ClCompile Include="CmdLoader.c" />
     <ClCompile Include="communication.c" />
+    <ClCompile Include="Configuration.c" />
     <ClCompile Include="core.c" />
     <ClCompile Include="FunctionMapper.c" />
     <ClCompile Include="instpro.cpp" />
